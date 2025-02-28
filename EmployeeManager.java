@@ -1,19 +1,19 @@
+
 import java.io.*;
 import java.util.*;
 
 public class EmployeeManager {
 
     private static String readFromFile() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(Constants.FILE_PATH));
-        String line = reader.readLine();
-        reader.close();
-        return line;
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.FILE_PATH))) {
+            return reader.readLine();
+        }
     }
 
     private static void writeToFile(String data) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(Constants.FILE_PATH, true));
-        writer.write(data);
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Constants.FILE_PATH, true))) {
+            writer.write(data);
+        }
     }
 
     public static void main(String[] args) {
@@ -25,8 +25,7 @@ public class EmployeeManager {
         if (args[0].equals("l")) {
             System.out.println("Loading data ...");
             try {
-                String line = readFromFile();
-                String[] employees = line.split(",");
+                String[] employees = readFromFile().split(",");
                 for (String employee : employees) {
                     System.out.println(employee);
                 }
@@ -39,8 +38,7 @@ public class EmployeeManager {
                 String line = readFromFile();
                 System.out.println(line);
                 String[] employees = line.split(",");
-                Random rand = new Random();
-                int index = rand.nextInt(employees.length);
+                int index = new Random().nextInt(employees.length);
                 System.out.println(employees[index]);
             } catch (Exception e) {
             }
@@ -56,10 +54,9 @@ public class EmployeeManager {
         } else if (args[0].contains("?")) {
             System.out.println("Loading data ...");
             try {
-                String line = readFromFile();
-                String[] employees = line.split(",");
-                boolean found = false;
+                String[] employees = readFromFile().split(",");
                 String searchEmployee = args[0].substring(1);
+                boolean found = false;
                 for (String employee : employees) {
                     if (employee.equals(searchEmployee)) {
                         System.out.println("Employee found!");
@@ -94,8 +91,7 @@ public class EmployeeManager {
         } else if (args[0].contains("u")) {
             System.out.println("Loading data ...");
             try {
-                String line = readFromFile();
-                String[] employees = line.split(",");
+                String[] employees = readFromFile().split(",");
                 String employeeToUpdate = args[0].substring(1);
                 for (int i = 0; i < employees.length; i++) {
                     if (employees[i].equals(employeeToUpdate)) {
@@ -109,8 +105,7 @@ public class EmployeeManager {
         } else if (args[0].contains("d")) {
             System.out.println("Loading data ...");
             try {
-                String line = readFromFile();
-                String[] employees = line.split(",");
+                String[] employees = readFromFile().split(",");
                 String employeeToDelete = args[0].substring(1);
                 List<String> employeeList = new ArrayList<>(Arrays.asList(employees));
                 employeeList.remove(employeeToDelete);
