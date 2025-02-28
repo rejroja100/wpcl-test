@@ -5,6 +5,12 @@ import java.util.*;
 
 public class EmployeeManager {
     public static void main(String[] args) {
+
+        if (args.length == 0) {
+
+            System.out.println("Please provide argument");
+            return;
+        }
         // Check arguments
         if (args[0].equals("l")) {
             System.out.println("Loading data ...");
@@ -128,6 +134,10 @@ public class EmployeeManager {
             } catch (Exception e) {
             }
             System.out.println("Data Deleted.");
+        }
+
+        else {
+            System.out.println("Please provide the correct argument");
         }
     }
 }
